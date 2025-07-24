@@ -1,11 +1,9 @@
-package com.sparta.memo.entity;
+package com.sparta.memo.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
-public class Memo {
+public class MemoResponseDto {
 
     private Long id;
     private String title;
