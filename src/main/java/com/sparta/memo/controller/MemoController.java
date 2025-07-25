@@ -3,6 +3,7 @@ package com.sparta.memo.controller;
 import com.sparta.memo.dto.MemoRequestDto;
 import com.sparta.memo.dto.MemoResponseDto;
 import com.sparta.memo.entity.Memo;
+import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -52,11 +53,14 @@ public class MemoController {
     }
 
     @GetMapping("/{id}")
-    public MemoResponseDto findMemoById(@PathVariable Long id) {
+    public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id) {
 
         Memo memo = memoList.get(id);
 
-        return new MemoResponseDto(memo);
+        if (memo == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(MemoResponseDto(memo), HttpStatus.OK);
 
     }
 
