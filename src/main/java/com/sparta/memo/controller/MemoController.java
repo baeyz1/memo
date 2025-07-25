@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/menos")
+@RequestMapping("/memos")
 public class MemoController {
 
     private final Map<Long, Memo> memoList = new HashMap<>();
@@ -31,6 +32,23 @@ public class MemoController {
         memoList.put(memoId, memo);
 
         return new ResponseEntity<>(new MemoResponseDto(memo), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public List<MemoResponseDto> finalAllMemos() {
+        //init List
+        List<MemoResponseDto> responseList = new ArrayList<>();
+
+        //HashMap<Memo> -> List<MemoResponseDto>
+        for (Memo memo : memoList.values()) {
+            MemoResponseDto responseDto = new MemoResponseDto(memo);
+            responseList.add(responseDto);
+        }
+
+        //Map To List
+        // responseList = memoList.values().stream().map(MemoResponseDto::new).toList();
+
+        return responseList;
     }
 
     @GetMapping("/{id}")
